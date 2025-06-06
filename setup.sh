@@ -1,37 +1,22 @@
 #!/bin/bash
 set -e  # Exit on any error
 
-# Initialize auto-response variable
-AUTO_RESPONSE=""
+# Auto-confirm mode
+AUTO_YES=false
+if [[ "$1" == "-y" ]]; then
+    AUTO_YES=true
+fi
 
-# Parse command-line arguments
-while getopts "yn" opt; do
-    case $opt in
-        y|Y) AUTO_RESPONSE="y" ;;
-        n|N) AUTO_RESPONSE="n" ;;
-        \?) echo "Invalid option: -$OPTARG" >&2; exit 1 ;;
-    esac
-done
-
-# Function to ask user for confirmation
+# Confirmation function
 confirm() {
-    if [ -n "$AUTO_RESPONSE" ]; then
-        # If AUTO_RESPONSE is set, return based on its value
-        if [ "$AUTO_RESPONSE" = "y" ]; then
-            echo "$1 (auto: Yes)"
-            return 0
-        else
-            echo "$1 (auto: No)"
-            return 1
-        fi
-    else
-        # Interactive prompt
-        read -p "$1 (y/N): " choice
-        case "$choice" in
-            y|Y) return 0 ;;
-            *) return 1 ;;
-        esac
+    if $AUTO_YES; then
+        return 0
     fi
+    read -p "$1 (y/N): " choice
+    case "$choice" in
+        y|Y) return 0 ;;
+        *) return 1 ;;
+    esac
 }
 
 # Check if running on Debian or Ubuntu
@@ -43,17 +28,17 @@ if [ -f /etc/os-release ]; then
     fi
 fi
 
-# System updates
+# System updates (optional, can skip in Docker to reduce image size)
 if confirm "Do you want to update system packages?"; then
     echo "Updating system packages..."
     sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y && sudo apt update && sudo apt upgrade -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt autoclean -y
 fi
 
-echo "Installing software-properties-common..."
-sudo apt install -y software-properties-common
-
-# Add deadsnakes PPA (Ubuntu only)
+# Install software-properties-common (only needed for Ubuntu PPA)
 if $is_ubuntu; then
+    echo "Installing cmake software-properties-common..."
+    sudo apt install -y cmake software-properties-common
+
     # Add deadsnakes PPA if it's not already present
     if ! grep -q "^deb .*\bdeadsnakes\b" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
         echo "Adding deadsnakes PPA..."
@@ -61,31 +46,27 @@ if $is_ubuntu; then
     else
         echo "deadsnakes PPA already exists. Skipping..."
     fi
+    echo "Updating package list again..."
+    sudo apt update
 fi
 
-echo "Updating package list again..."
-sudo apt update
-
-# Ask to install python3.10
-if confirm "Do you want to install Python3.10?"; then
-    echo "Installing Python 3.10 and related packages..."
-    sudo apt install -y python3.10 python3.10-venv python3.10-dev cmake
-
-    # Create virtual environment if it doesn't already exist
-    if [ ! -d ".venv" ]; then
-        echo "Creating virtual environment..."
-        python3.10 -m venv .venv
-    else
-        echo ".venv already exists. Skipping creation."
-    fi
+# Check if Python 3.10 is already installed
+if command -v python3.10 >/dev/null 2>&1; then
+    echo "Python 3.10 is already installed. Skipping installation."
 else
-    # Create virtual environment if it doesn't already exist
-    if [ ! -d ".venv" ]; then
-        echo "Creating virtual environment..."
-        python -m venv .venv
-    else
-        echo ".venv already exists. Skipping creation."
+    # Ask to install python3.10 (only for Ubuntu or systems without Python 3.10)
+    if confirm "Do you want to install Python3.10?"; then
+        echo "Installing Python 3.10 and related packages..."
+        sudo apt install -y python3.10 python3.10-venv python3.10-dev cmake
     fi
+fi
+
+# Create virtual environment if it doesn't already exist
+if [ ! -d ".venv" ]; then
+    echo "Creating virtual environment..."
+    python3.10 -m venv .venv
+else
+    echo ".venv already exists. Skipping creation."
 fi
 
 echo "Activating virtual environment..."

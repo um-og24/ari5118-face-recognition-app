@@ -38,8 +38,6 @@ Login (make sure Docker Desktop is running): `docker login`
 
 Build and push onto Docker hub: `docker build -t owengauci24/ari5118-face-recognition-app:latest . --push`
 
-, or to make it platform independent: `docker buildx build --platform linux/amd64,linux/arm64 -t owengauci24/ari5118-face-recognition-app:latest . --push`
-
 Download a copy: `docker pull owengauci24/ari5118-face-recognition-app:latest`
 
 Run the image: `docker run -it -p 8506:8506 owengauci24/ari5118-face-recognition-app:latest`

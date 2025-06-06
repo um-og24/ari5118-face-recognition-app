@@ -1,0 +1,19 @@
+services:
+  ari5118-face-recognition-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: owengauci24/ari5118-face-recognition-app:latest
+    pull_policy: always
+    container_name: ari5118-face-recognition-app-container
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    command: /bin/bash -c "./start.sh --all"
+    ports:
+      - "8000:8000"
+      - "8501:8501"
+      - "8502:8502"
+    restart: unless-stopped
+    volumes:
+      - .:/ari5118-face-recognition-app
