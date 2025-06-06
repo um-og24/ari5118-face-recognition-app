@@ -1,13 +1,37 @@
 #!/bin/bash
 set -e  # Exit on any error
 
+# Initialize auto-response variable
+AUTO_RESPONSE=""
+
+# Parse command-line arguments
+while getopts "yn" opt; do
+    case $opt in
+        y|Y) AUTO_RESPONSE="y" ;;
+        n|N) AUTO_RESPONSE="n" ;;
+        \?) echo "Invalid option: -$OPTARG" >&2; exit 1 ;;
+    esac
+done
+
 # Function to ask user for confirmation
 confirm() {
-    read -p "$1 (y/N): " choice
-    case "$choice" in
-        y|Y) return 0 ;;
-        *) return 1 ;;
-    esac
+    if [ -n "$AUTO_RESPONSE" ]; then
+        # If AUTO_RESPONSE is set, return based on its value
+        if [ "$AUTO_RESPONSE" = "y" ]; then
+            echo "$1 (auto: Yes)"
+            return 0
+        else
+            echo "$1 (auto: No)"
+            return 1
+        fi
+    else
+        # Interactive prompt
+        read -p "$1 (y/N): " choice
+        case "$choice" in
+            y|Y) return 0 ;;
+            *) return 1 ;;
+        esac
+    fi
 }
 
 # Check if running on Debian or Ubuntu
@@ -27,7 +51,6 @@ fi
 
 echo "Installing software-properties-common..."
 sudo apt install -y software-properties-common
-
 
 # Add deadsnakes PPA (Ubuntu only)
 if $is_ubuntu; then
@@ -56,7 +79,6 @@ if confirm "Do you want to install Python3.10?"; then
         echo ".venv already exists. Skipping creation."
     fi
 else
-
     # Create virtual environment if it doesn't already exist
     if [ ! -d ".venv" ]; then
         echo "Creating virtual environment..."
@@ -90,8 +112,8 @@ fi
 
 echo ""
 
-# Ask to launch the App right now
-if confirm "Do you want to launch the ARI5118 - Online Face Recognition App?"; then
-    # Launch backend and frontend
-    ./start.sh --all
-fi
+# # Ask to launch the App right now
+# if confirm "Do you want to launch the ARI5118 - Online Face Recognition App?"; then
+#     # Launch backend and frontend
+#     ./start.sh --all
+# fi

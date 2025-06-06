@@ -17,7 +17,7 @@ trap 'handle_error ${LINENO} "$BASH_COMMAND" $?' ERR
 usage() {
     echo "Usage: $0 [OPTIONS]"
     echo "Options:"
-    echo "  --all       Launch both frontend and backend (default if no option is specified)"
+    echo "  --all       Launch frontend, backend, and monitoring (default if no option is specified)"
     echo "  --backend   Launch only the backend"
     echo "  --frontend  Launch only the frontend"
     echo "  --monitoring   Launch only the hardware monitoring"
@@ -215,12 +215,12 @@ trap cleanup SIGINT SIGTERM EXIT
 # Array to store PIDs of all launched processes
 PIDS=()
 
-# Default behavior - launch both
+# Default behavior - launch all
 LAUNCH_BACKEND=false
 LAUNCH_FRONTEND=false
 LAUNCH_MONITORING=false
 
-# If no arguments, launch both
+# If no arguments, launch all
 if [ $# -eq 0 ]; then
     LAUNCH_BACKEND=true
     LAUNCH_FRONTEND=true

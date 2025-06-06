@@ -4,20 +4,24 @@
 This repository contains the Python implementation of a face recognition and benchmarking system, as described in the ARI5118 Assignment paper.
 
 ## Setup
-Linux or WSL Run: `setup.sh`
 This script will get the environment ready and set up for you.
+
+WARNING: Runs only on Linux or WSL and uses Python3.10
+
+Run: `./setup.sh -y`
+
 
 ## Dependencies
 Install via: `pip install -r requirements.txt`
 
 ## Execution
-Run the start script: `start.sh`
+Run the start script: `./start.sh` or `./start.sh --all`
 
 or execute the individual components seperately:
 
-- `start.sh --monitoring`
-- `start.sh --backend`
-- `start.sh --frontend`
+- `./start.sh --monitoring`
+- `./start.sh --backend`
+- `./start.sh --frontend`
 
 Access the interface at `http://localhost:8501`.
 
