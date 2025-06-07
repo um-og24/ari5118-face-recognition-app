@@ -40,5 +40,5 @@ Build and push onto Docker hub: `docker build -t owengauci24/ari5118-face-recogn
 
 Download a copy: `docker pull owengauci24/ari5118-face-recognition-app:latest`
 
-Run the image: `docker run -it -p 8506:8506 owengauci24/ari5118-face-recognition-app:latest`
+Run the image: `docker run -it -p 8501:8501 owengauci24/ari5118-face-recognition-app:latest`
 
