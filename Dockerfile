@@ -5,7 +5,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Update package index and install sudo
-RUN apt-get update && apt-get install -y sudo cmake && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y sudo cmake libgl1 && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /ari5118-face-recognition-app
