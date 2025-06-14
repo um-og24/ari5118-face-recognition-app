@@ -1,0 +1,44 @@
+{
+    "test_images": [
+        {
+            "filename": "test_image_001.jpg",
+            "person_names": ["Sydney_Sweeney"],
+            "path": "data/test_dataset/test_image_001.jpg"
+        },
+        {
+            "filename": "test_image_002.jpg",
+            "person_names": ["Margot_Robbie"],
+            "path": "data/test_dataset/test_image_002.jpg"
+        },
+        {
+            "filename": "test_image_003.webp",
+            "person_names": ["Sydney_Sweeney"],
+            "path": "data/test_dataset/test_image_003.webp"
+        },
+        {
+            "filename": "test_image_004.webp",
+            "person_names": ["Daniel_Craig","Lea_Seydoux","Olga_Kurylenko"],
+            "path": "data/test_dataset/test_image_004.webp"
+        },
+        {
+            "filename": "test_image_005.jpg",
+            "person_names": ["Scarlett_Johansson"],
+            "path": "data/test_dataset/test_image_005.jpg"
+        },
+        {
+            "filename": "test_image_006.jpg",
+            "person_names": ["Margot_Robbie","Margot_Robbie"],
+            "path": "data/test_dataset/test_image_006.jpg"
+        },
+        {
+            "filename": "test_image_007.png",
+            "person_names": ["Daniel_Craig","Lea_Seydoux","Ana_De_Armas"],
+            "path": "data/test_dataset/test_image_007.png"
+        },
+        {
+            "filename": "test_image_008.webp",
+            "person_names": ["Gal_Gadot"],
+            "path": "data/test_dataset/test_image_008.webp"
+        }
+    ]
+}

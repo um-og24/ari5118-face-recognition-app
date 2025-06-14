@@ -1,0 +1,48 @@
+# Web Framework and Interface
+fastapi
+uvicorn
+streamlit
+streamlit-autorefresh
+streamlit-webrtc
+python-multipart
+psutil>=5.9
+plotly>=5.15
+gputil
+yt_dlp
+
+# Image Processing and Computer Vision
+opencv-python
+numpy<2.0.0
+pillow
+imutils
+
+# Video Processing
+av
+cv
+
+# Face Recognition Models
+dlib
+face_recognition
+deepface
+facenet-pytorch
+insightface
+
+# Deep Learning
+torch
+onnxruntime
+scikit-image
+tf-keras
+tensorflow
+keras
+mtcnn
+pickle-mixin
+
+# Utilities
+setuptools
+wheel
+requests
+
+
+## Hailo-8
+#setproctitle
+#git+https://github.com/hailo-ai/hailo-apps-infra.git
