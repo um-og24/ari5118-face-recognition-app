@@ -62,6 +62,12 @@ def run_benchmarks(library: str, detector_name: str, model_name: str) -> None:
     with batch_test_tab:
         _run_batch_benchmarks(selected_models, deepface_detectors)
 
+        if st.session_state.batch_results is None and io_services.exists(f"{BENCHMARKS_REPORTS_DIR}/full_batch_results.csv"):
+            st.session_state.batch_results = io_services.read_csv_content(f"{BENCHMARKS_REPORTS_DIR}/full_batch_results.csv")
+
+            if st.session_state.batch_agg_results is None and io_services.exists(f"{BENCHMARKS_REPORTS_DIR}/batch_results.csv"):
+                st.session_state.batch_agg_results = io_services.read_csv_content(f"{BENCHMARKS_REPORTS_DIR}/batch_results.csv")
+
         if st.session_state.batch_results is not None and st.session_state.batch_agg_results is not None:
             st.divider()
             st.info("Displaying latest batch benchmark results.")
