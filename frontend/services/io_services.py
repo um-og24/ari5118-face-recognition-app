@@ -55,3 +55,12 @@ def read_json_content(filepath):
     from json import load
     with open(filepath, "r") as f:
         return load(f)
+
+
+
+def read_csv_content(filepath):
+    if not os.path.exists(filepath):
+        return None
+
+    from pandas import read_csv
+    return read_csv(filepath)
