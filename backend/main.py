@@ -124,22 +124,6 @@ async def train_model(
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
 
-@app.post("/train_model_old")
-async def train_model_old():
-    try:
-        for model_name in INSIGHTFACE_SUPPORTED_MODELS:
-            train_insightface_model(DATASET_DIR, model_name)
-
-        for model_name in FACE_RECOGNITION_SUPPORTED_MODELS:
-            train_face_recognition_model(DATASET_DIR, model_name)
-
-        for detector_name in DEEPFACE_SUPPORTED_BACKENDS_DETECTORS:
-            for model_name in DEEPFACE_SUPPORTED_MODELS:
-                train_deepface_model(DATASET_DIR, detector_name, model_name)
-
-        return JSONResponse(status_code=200, content={"message": "Training completed!"})
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"error": str(e)})
 
 @app.post("/capture")
 async def capture(file: UploadFile = File(...), library: str = Form(...), detector_name: str = Form(None), model_name: str = Form(...), name: str = Form("unknown_Person")):
